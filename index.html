@@ -3,7 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    
+    <meta name="theme-color" content="#1a1a2e">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Бурмалдат">
+    <link rel="manifest" href="data:application/manifest+json,%7B%22name%22%3A%22%D0%91%D1%83%D1%80%D0%BC%D0%B0%D0%BB%D0%B4%D0%B0%D1%82%D1%81%D0%BA%D0%B8%D0%B9%20%D0%BF%D0%B5%D1%80%D0%B5%D0%B2%D0%BE%D0%B4%D1%87%D0%B8%D0%BA%22%2C%22short_name%22%3A%22%D0%91%D1%83%D1%80%D0%BC%D0%B0%D0%BB%D0%B4%D0%B0%D1%82%22%2C%22start_url%22%3A%22.%2F%22%2C%22display%22%3A%22standalone%22%2C%22background_color%22%3A%22%231a1a2e%22%2C%22theme_color%22%3A%22%23e94560%22%2C%22icons%22%3A%5B%7B%22src%22%3A%22data%3Aimage%2Fsvg%2Bxml%2C%253Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%20100%20100'%3E%3Crect%20width%3D'100'%20height%3D'100'%20rx%3D'20'%20fill%3D'%231a1a2e'%2F%3E%3Ctext%20x%3D'50'%20y%3D'65'%20font-size%3D'55'%20text-anchor%3D'middle'%20fill%3D'%23e94560'%20font-family%3D'Arial'%3E%D0%91%3C%2Ftext%3E%3C%2Fsvg%3E%22%2C%22sizes%22%3A%22100x100%22%2C%22type%22%3A%22image%2Fsvg%2Bxml%22%7D%2C%7B%22src%22%3A%22data%3Aimage%2Fsvg%2Bxml%2C%253Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%20512%20512'%3E%3Crect%20width%3D'512'%20height%3D'512'%20rx%3D'100'%20fill%3D'%231a1a2e'%2F%3E%3Ctext%20x%3D'256'%20y%3D'330'%20font-size%3D'280'%20text-anchor%3D'middle'%20fill%3D'%23e94560'%20font-family%3D'Arial'%20font-weight%3D'bold'%3E%D0%91%3C%2Ftext%3E%3C%2Fsvg%3E%22%2C%22sizes%22%3A%22512x512%22%2C%22type%22%3A%22image%2Fsvg%2Bxml%22%7D%5D%7D">
+    
     <title>Бурмалдатский Переводчик</title>
+    
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&display=swap');
 
@@ -24,6 +32,14 @@
             padding: 20px;
             position: relative;
             overflow-x: hidden;
+            -webkit-user-select: none;
+            user-select: none;
+            overscroll-behavior: none;
+        }
+
+        textarea {
+            -webkit-user-select: text;
+            user-select: text;
         }
 
         .particles {
@@ -57,21 +73,22 @@
             max-width: 800px;
             background: rgba(255, 255, 255, 0.05);
             backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
             border-radius: 30px;
             padding: 40px;
             border: 1px solid rgba(255, 255, 255, 0.1);
             box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4),
                         0 0 0 1px rgba(233, 69, 96, 0.1),
                         inset 0 0 60px rgba(233, 69, 96, 0.05);
-            transform: translateY(0);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
 
-        .container:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 40px 80px rgba(0, 0, 0, 0.5),
-                        0 0 0 1px rgba(233, 69, 96, 0.2),
-                        inset 0 0 80px rgba(233, 69, 96, 0.08);
+        @media (hover: hover) {
+            .container:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 40px 80px rgba(0, 0, 0, 0.5),
+                            0 0 0 1px rgba(233, 69, 96, 0.2),
+                            inset 0 0 80px rgba(233, 69, 96, 0.08);
+            }
         }
 
         .header {
@@ -164,7 +181,6 @@
         #outputText {
             background: rgba(255, 255, 255, 0.03);
             border-color: rgba(255, 215, 0, 0.2);
-            cursor: default;
         }
 
         #outputText:focus {
@@ -195,21 +211,24 @@
             -webkit-tap-highlight-color: transparent;
         }
 
-        .btn-translate {
-            background: linear-gradient(135deg, #e94560, #c23152);
+        /* Кнопка Поменять */
+        .btn-reverse {
+            background: linear-gradient(135deg, #6c5ce7, #a29bfe);
             color: white;
-            box-shadow: 0 10px 30px rgba(233, 69, 96, 0.4);
-            flex: 1;
-            min-width: 200px;
+            box-shadow: 0 10px 30px rgba(108, 92, 231, 0.4);
+            flex: 2;
+            min-width: 160px;
         }
 
-        .btn-translate:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 15px 40px rgba(233, 69, 96, 0.6);
+        @media (hover: hover) {
+            .btn-reverse:hover {
+                transform: translateY(-3px);
+                box-shadow: 0 15px 40px rgba(108, 92, 231, 0.6);
+            }
         }
 
-        .btn-translate:active {
-            transform: translateY(0);
+        .btn-reverse:active {
+            transform: scale(0.95);
         }
 
         .btn-copy {
@@ -217,26 +236,59 @@
             color: white;
             border: 2px solid rgba(255, 255, 255, 0.2);
             backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            flex: 1;
         }
 
-        .btn-copy:hover {
-            background: rgba(255, 255, 255, 0.2);
-            border-color: #ffd93d;
-            box-shadow: 0 10px 30px rgba(255, 215, 0, 0.3);
-            transform: translateY(-3px);
+        @media (hover: hover) {
+            .btn-copy:hover {
+                background: rgba(255, 255, 255, 0.2);
+                border-color: #ffd93d;
+                box-shadow: 0 10px 30px rgba(255, 215, 0, 0.3);
+                transform: translateY(-3px);
+            }
         }
 
         .btn-clear {
             background: transparent;
             color: rgba(255, 255, 255, 0.5);
             border: 2px solid rgba(255, 255, 255, 0.1);
+            flex: 0.7;
         }
 
-        .btn-clear:hover {
-            color: white;
-            border-color: rgba(255, 255, 255, 0.4);
-            background: rgba(255, 255, 255, 0.05);
-            transform: translateY(-3px);
+        @media (hover: hover) {
+            .btn-clear:hover {
+                color: white;
+                border-color: rgba(255, 255, 255, 0.4);
+                background: rgba(255, 255, 255, 0.05);
+                transform: translateY(-3px);
+            }
+        }
+
+        /* Индикатор направления */
+        .direction-indicator {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            margin-bottom: 5px;
+        }
+
+        .direction-arrow {
+            color: #ffd93d;
+            font-size: 18px;
+            transition: transform 0.4s ease;
+        }
+
+        .direction-arrow.reversed {
+            transform: rotate(180deg);
+        }
+
+        .direction-text {
+            color: rgba(255, 255, 255, 0.4);
+            font-size: 11px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
         }
 
         .copy-notification {
@@ -298,6 +350,15 @@
             }
         }
 
+        @supports (padding: max(0px)) {
+            body {
+                padding-left: max(20px, env(safe-area-inset-left));
+                padding-right: max(20px, env(safe-area-inset-right));
+                padding-bottom: max(20px, env(safe-area-inset-bottom));
+                padding-top: max(20px, env(safe-area-inset-top));
+            }
+        }
+
         @media (max-width: 768px) {
             .container {
                 padding: 30px;
@@ -307,8 +368,8 @@
                 font-size: 36px;
             }
             .btn {
-                padding: 14px 28px;
-                font-size: 15px;
+                padding: 14px 20px;
+                font-size: 14px;
             }
         }
 
@@ -337,26 +398,29 @@
                 letter-spacing: 0.5px;
             }
             textarea {
-                font-size: 14px;
+                font-size: 16px;
                 padding: 15px;
                 min-height: 110px;
                 border-radius: 15px;
             }
             .button-group {
-                gap: 10px;
+                gap: 8px;
             }
             .btn {
-                padding: 12px 20px;
-                font-size: 13px;
+                padding: 12px 15px;
+                font-size: 12px;
                 letter-spacing: 0.5px;
                 border-radius: 40px;
             }
-            .btn-translate {
+            .btn-reverse {
                 min-width: 100%;
-                order: -1;
+                flex: 1 1 100%;
             }
-            .btn-copy, .btn-clear {
+            .btn-copy {
                 flex: 1;
+            }
+            .btn-clear {
+                flex: 0.5;
             }
             .stats {
                 gap: 20px;
@@ -391,14 +455,14 @@
                 margin-bottom: 20px;
             }
             textarea {
-                font-size: 13px;
+                font-size: 16px;
                 padding: 12px;
                 min-height: 90px;
                 border-radius: 12px;
             }
             .btn {
-                padding: 10px 15px;
-                font-size: 12px;
+                padding: 10px 12px;
+                font-size: 11px;
                 letter-spacing: 0;
             }
             .label {
@@ -408,62 +472,46 @@
                 font-size: 18px;
             }
         }
-
-        @media (max-width: 850px) and (orientation: landscape) {
-            body {
-                padding: 10px;
-                align-items: flex-start;
-            }
-            .container {
-                padding: 20px;
-                max-width: 600px;
-            }
-            textarea {
-                min-height: 80px;
-            }
-            .translator-box {
-                gap: 10px;
-            }
-            .header {
-                margin-bottom: 15px;
-            }
-            .title {
-                font-size: 24px;
-            }
-        }
     </style>
 </head>
 <body>
 
     <div class="particles" id="particles"></div>
 
-    <div class="copy-notification" id="notification">✅ Скопировано в буфер!</div>
+    <div class="copy-notification" id="notification">✅ Скопировано!</div>
 
     <div class="container">
         <div class="header">
             <h1 class="title">БУРМАЛДАТСКИЙ</h1>
+            <div class="direction-indicator">
+                <span class="direction-text" id="directionLabel">Русский → Бурмалдатский</span>
+                <span class="direction-arrow" id="directionArrow">↓</span>
+            </div>
         </div>
 
         <div class="translator-box">
             <div class="input-group">
                 <div class="label">
                     <span class="label-icon"></span>
-                    Введи текст на русском
+                    <span id="inputLabel">Текст на русском</span>
                 </div>
                 <textarea 
                     id="inputText" 
-                    placeholder="Пиши сюда по-русски, бро..."
+                    placeholder="Пиши сюда, бро..."
+                    autocomplete="off"
+                    autocorrect="off"
+                    spellcheck="false"
                 ></textarea>
             </div>
 
             <div class="button-group">
-                <button class="btn btn-translate" id="translateBtn" onclick="translateText()">
-                    🔥 Перевести
+                <button class="btn btn-reverse" id="reverseBtn">
+                    🔄 Поменять
                 </button>
-                <button class="btn btn-copy" id="copyBtn" onclick="copyText()">
+                <button class="btn btn-copy" id="copyBtn">
                     📋 Копировать
                 </button>
-                <button class="btn btn-clear" onclick="clearAll()">
+                <button class="btn btn-clear" id="clearBtn">
                     ✕ Очистить
                 </button>
             </div>
@@ -471,11 +519,11 @@
             <div class="input-group">
                 <div class="label output-label">
                     <span class="label-icon"></span>
-                    Бурмалдатский перевод
+                    <span id="outputLabel">Бурмалдатский</span>
                 </div>
                 <textarea 
                     id="outputText" 
-                    placeholder="Тут будет бурмалдатский..." 
+                    placeholder="Тут будет перевод..." 
                     readonly
                 ></textarea>
             </div>
@@ -494,58 +542,35 @@
     </div>
 
     <script>
-        // ==================== СЛОВАРЬ БУРМАЛДАТСКОГО ====================
+        // ==================== СЛОВАРЬ ====================
         const REPLACEMENTS = {
-            "я": "ч",
-            "мне": "мье",
-            "мы": "мч",
-            "кто": "кьо",
-            "это": "эьо",
-            "что": "ято",
-            "то": "ьо",
-            "да": "дэ",
-            "лет": "тет",
-            "сек": "чек",
-            "пшо": "его",
-            "друг": "друн",
-            "кот": "котость",
-            "школа": "школость",
-            "телефон": "бурмалдфон",
-            "заяц": "бурмалдаяц",
-            "птички": "бурмалдички",
-            "зонтом": "зонтичностью",
-            "внук": "внуч",
-            "меллстрой": "меллстройность",
-            "фамилия": "фомилия",
-            "максим": "еле говрящий Максим",
-            "эверест": "элевер",
-            "чёрт": "тёлт",
-            "черт": "тёлт",
-            "блин": "бл*н",
-            "тенге": "ценге",
-            "манго": "maaaaaango",
-            "парни": "барни",
-            "хогвартс": "fogвартс",
-            "роналдо": "рональжо",
-            "жопа": "туз",
-            "лайк": "лося",
-            "пена": "пема",
-            "берёза": "береза",
-            "береза": "береза",
-            "дуб": "дур",
-            "мод": "мож",
-            "гулять": "БЛЯДЬ гулять",
-            "смеяться": "сметанаяйца",
-            "старался": "стараласт",
-            "старалась": "стараласт",
-            "кинула": "кикула",
-            "важнее": "вишнее",
-            "нишевая": "нищая",
-            "отлично": "бурмалда",
+            "я": "ч", "мне": "мье", "мы": "мч", "кто": "кьо",
+            "это": "эьо", "что": "ято", "то": "ьо", "да": "дэ",
+            "лет": "тет", "сек": "чек", "пшо": "его",
+            "друг": "друн", "кот": "котость", "школа": "школость",
+            "телефон": "бурмалдфон", "заяц": "бурмалдаяц",
+            "птички": "бурмалдички", "зонтом": "зонтичностью",
+            "внук": "внуч", "меллстрой": "меллстройность",
+            "фамилия": "фомилия", "максим": "еле говрящий Максим",
+            "эверест": "элевер", "чёрт": "тёлт", "черт": "тёлт",
+            "блин": "бл*н", "тенге": "ценге", "манго": "maaaaaango",
+            "парни": "барни", "хогвартс": "fogвартс",
+            "роналдо": "рональжо", "жопа": "туз", "лайк": "лося",
+            "пена": "пема", "берёза": "береза", "береза": "береза",
+            "дуб": "дур", "мод": "мож",
+            "гулять": "БЛЯДЬ гулять", "смеяться": "сметанаяйца",
+            "старался": "стараласт", "старалась": "стараласт",
+            "кинула": "кикула", "важнее": "вишнее",
+            "нишевая": "нищая", "отлично": "бурмалда",
             "поганец": "понанец",
         };
 
-        // Приветствия и прощания (НЕ получают "ность")
+        // Обратный словарь
+        const REVERSE_REPLACEMENTS = {};
+        for (const [ru, bur] of Object.entries(REPLACEMENTS)) {
+            REVERSE_REPLACEMENTS[bur.toLowerCase()] = ru;
+        }
+
         const GREETINGS = new Set([
             "привет", "пока", "здравствуй", "здравствуйте", "здарова",
             "добрый", "доброе", "доброй", "доброго",
@@ -559,7 +584,6 @@
             "здрасте", "здрасьте", "дарова",
         ]);
 
-        // Вопросительные и относительные местоимения/наречия (НЕ получают "ность")
         const QUESTION_WORDS = new Set([
             "как", "какой", "какая", "какое", "какие",
             "каков", "какова", "каково", "каковы",
@@ -569,10 +593,8 @@
             "где", "куда", "откуда",
             "когда", "зачем", "почему", "отчего",
             "сколько", "насколько",
-            "который", "которая", "которое", "которые",
         ]);
 
-        // Окончания причастий и деепричастий (не получают "ность")
         const PARTICIPLE_ENDINGS = [
             "вший", "вшая", "вшее", "вшие",
             "щий", "щая", "щее", "щие",
@@ -583,103 +605,173 @@
             "я", "а", "учи", "ючи",
         ];
 
-        function isGreeting(word) {
-            return GREETINGS.has(word.toLowerCase());
-        }
+        let isReversed = false;
 
-        function isQuestionWord(word) {
-            return QUESTION_WORDS.has(word.toLowerCase());
-        }
+        function isGreeting(word) { return GREETINGS.has(word.toLowerCase()); }
+        function isQuestionWord(word) { return QUESTION_WORDS.has(word.toLowerCase()); }
 
         function isParticipleOrGerund(word) {
             const lower = word.toLowerCase();
             for (const ending of PARTICIPLE_ENDINGS) {
-                if (lower.endsWith(ending) && lower.length > ending.length + 1) {
-                    return true;
-                }
+                if (lower.endsWith(ending) && lower.length > ending.length + 1) return true;
             }
             return false;
         }
 
+        // Русский → Бурмалдатский
         function translateWord(word) {
             const isCapitalized = /^[А-ЯЁA-Z]/.test(word);
             const wordLower = word.toLowerCase();
 
-            // 1. Точное совпадение в словаре → ПОЛНАЯ замена
             if (wordLower in REPLACEMENTS) {
                 let result = REPLACEMENTS[wordLower];
-                if (isCapitalized) {
-                    result = result.charAt(0).toUpperCase() + result.slice(1);
-                }
+                if (isCapitalized) result = result.charAt(0).toUpperCase() + result.slice(1);
                 return result;
             }
+            if (isGreeting(wordLower)) return word;
+            if (isQuestionWord(wordLower)) return word;
+            if (isParticipleOrGerund(wordLower)) return word;
 
-            // 2. Приветствие → не меняем
-            if (isGreeting(wordLower)) {
-                return word;
-            }
-
-            // 3. Вопросительное слово → не меняем
-            if (isQuestionWord(wordLower)) {
-                return word;
-            }
-
-            // 4. Причастие/деепричастие → не меняем
-            if (isParticipleOrGerund(wordLower)) {
-                return word;
-            }
-
-            // 5. Все остальные слова → добавляем "ность"
             const wordStripped = wordLower.replace(/[аеёиоуыэюяьъ]$/, '');
             const finalWord = (wordStripped.length >= 2 ? wordStripped : wordLower) + "ность";
             return isCapitalized ? finalWord.charAt(0).toUpperCase() + finalWord.slice(1) : finalWord;
+        }
+
+        // Бурмалдатский → Русский
+        function reverseTranslateWord(word) {
+            const isCapitalized = /^[А-ЯЁA-Z]/.test(word);
+            const wordLower = word.toLowerCase();
+
+            if (wordLower in REVERSE_REPLACEMENTS) {
+                let result = REVERSE_REPLACEMENTS[wordLower];
+                if (isCapitalized) result = result.charAt(0).toUpperCase() + result.slice(1);
+                return result;
+            }
+
+            if (wordLower.endsWith("ность") && wordLower.length > 6) {
+                let stripped = wordLower.slice(0, -5);
+                if (isCapitalized) stripped = stripped.charAt(0).toUpperCase() + stripped.slice(1);
+                return stripped;
+            }
+
+            if (wordLower.endsWith("ость") && wordLower.length > 5) {
+                let stripped = wordLower.slice(0, -4);
+                if (isCapitalized) stripped = stripped.charAt(0).toUpperCase() + stripped.slice(1);
+                return stripped;
+            }
+
+            return word;
         }
 
         function translateToBurmaldat(text) {
             const tokens = text.match(/[а-яА-ЯёЁa-zA-Z]+|[^а-яА-ЯёЁa-zA-Z]+/g) || [];
             return tokens.map(token => {
                 if (/[а-яА-ЯёЁa-zA-Z]/.test(token)) {
-                    return translateWord(token);
+                    return isReversed ? reverseTranslateWord(token) : translateWord(token);
                 }
                 return token;
             }).join('');
         }
 
+        // ==================== UI ====================
+        const inputText = document.getElementById('inputText');
+        const outputText = document.getElementById('outputText');
+        const charCount = document.getElementById('charCount');
+        const wordCount = document.getElementById('wordCount');
+        const notification = document.getElementById('notification');
+        const directionLabel = document.getElementById('directionLabel');
+        const directionArrow = document.getElementById('directionArrow');
+        const inputLabel = document.getElementById('inputLabel');
+        const outputLabel = document.getElementById('outputLabel');
+
+        function updateDirectionUI() {
+            if (isReversed) {
+                directionLabel.textContent = 'Бурмалдатский → Русский';
+                directionArrow.classList.add('reversed');
+                inputLabel.textContent = 'Текст на бурмалдатском';
+                outputLabel.textContent = 'Русский перевод';
+                inputText.placeholder = 'Пиши по-бурмалдатски, бро...';
+                outputText.placeholder = 'Тут будет русский...';
+            } else {
+                directionLabel.textContent = 'Русский → Бурмалдатский';
+                directionArrow.classList.remove('reversed');
+                inputLabel.textContent = 'Текст на русском';
+                outputLabel.textContent = 'Бурмалдатский';
+                inputText.placeholder = 'Пиши сюда, бро...';
+                outputText.placeholder = 'Тут будет перевод...';
+            }
+        }
+
         function translateText() {
-            const input = document.getElementById('inputText').value;
-            const output = translateToBurmaldat(input);
-            document.getElementById('outputText').value = output;
-            updateStats(input);
+            const input = inputText.value;
+            outputText.value = translateToBurmaldat(input);
+            const chars = input.replace(/\s/g, '').length;
+            const words = input.trim() ? input.trim().split(/\s+/).length : 0;
+            charCount.textContent = chars;
+            wordCount.textContent = words;
+
+            try { localStorage.setItem('burmaldat_input', input); } catch(e) {}
+            try { localStorage.setItem('burmaldat_reversed', isReversed); } catch(e) {}
+        }
+
+        function toggleReverse() {
+            isReversed = !isReversed;
+            updateDirectionUI();
+            
+            // Меняем местами текст
+            const temp = inputText.value;
+            inputText.value = outputText.value;
+            outputText.value = temp;
+            
+            const input = inputText.value;
+            const chars = input.replace(/\s/g, '').length;
+            const words = input.trim() ? input.trim().split(/\s+/).length : 0;
+            charCount.textContent = chars;
+            wordCount.textContent = words;
+            
+            try { localStorage.setItem('burmaldat_input', inputText.value); } catch(e) {}
+            try { localStorage.setItem('burmaldat_reversed', isReversed); } catch(e) {}
         }
 
         function copyText() {
-            const output = document.getElementById('outputText');
-            output.select();
-            document.execCommand('copy');
-            showNotification();
+            if (!outputText.value) return;
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(outputText.value).then(showNotification);
+            } else {
+                outputText.select();
+                document.execCommand('copy');
+                showNotification();
+            }
         }
 
         function clearAll() {
-            document.getElementById('inputText').value = '';
-            document.getElementById('outputText').value = '';
-            updateStats('');
-        }
-
-        function updateStats(text) {
-            const chars = text.replace(/\s/g, '').length;
-            const words = text.trim() ? text.trim().split(/\s+/).length : 0;
-            document.getElementById('charCount').textContent = chars;
-            document.getElementById('wordCount').textContent = words;
+            inputText.value = '';
+            outputText.value = '';
+            charCount.textContent = '0';
+            wordCount.textContent = '0';
+            try { localStorage.removeItem('burmaldat_input'); } catch(e) {}
+            inputText.focus();
         }
 
         function showNotification() {
-            const notif = document.getElementById('notification');
-            notif.classList.add('show');
-            setTimeout(() => notif.classList.remove('show'), 2000);
+            notification.classList.add('show');
+            clearTimeout(notification._timeout);
+            notification._timeout = setTimeout(() => notification.classList.remove('show'), 2000);
+            if (navigator.vibrate) navigator.vibrate(50);
         }
 
+        document.getElementById('reverseBtn').addEventListener('click', toggleReverse);
+        document.getElementById('copyBtn').addEventListener('click', copyText);
+        document.getElementById('clearBtn').addEventListener('click', clearAll);
+
+        let debounceTimer;
+        inputText.addEventListener('input', function() {
+            clearTimeout(debounceTimer);
+            debounceTimer = setTimeout(translateText, 150);
+        });
+
         document.querySelectorAll('.btn').forEach(btn => {
-            btn.addEventListener('click', function(e) {
+            btn.addEventListener('pointerdown', function(e) {
                 const ripple = document.createElement('span');
                 ripple.className = 'ripple';
                 const rect = this.getBoundingClientRect();
@@ -692,9 +784,15 @@
             });
         });
 
-        document.getElementById('inputText').addEventListener('input', function() {
-            translateText();
-        });
+        try {
+            const savedReversed = localStorage.getItem('burmaldat_reversed');
+            if (savedReversed === 'true') {
+                isReversed = true;
+                updateDirectionUI();
+            }
+            const saved = localStorage.getItem('burmaldat_input');
+            if (saved) { inputText.value = saved; translateText(); }
+        } catch(e) {}
 
         function createParticles() {
             const container = document.getElementById('particles');
@@ -712,8 +810,23 @@
                 container.appendChild(particle);
             }
         }
-
         createParticles();
+
+        if ('serviceWorker' in navigator) {
+            const swCode = `
+                const CACHE_NAME = 'burmaldat-v4';
+                const ASSETS = [self.location.href];
+                self.addEventListener('install', e => {
+                    e.waitUntil(caches.open(CACHE_NAME).then(cache => cache.addAll(ASSETS)));
+                });
+                self.addEventListener('fetch', e => {
+                    e.respondWith(caches.match(e.request).then(cached => cached || fetch(e.request)));
+                });
+            `;
+            const blob = new Blob([swCode], {type: 'application/javascript'});
+            const swUrl = URL.createObjectURL(blob);
+            navigator.serviceWorker.register(swUrl).catch(() => {});
+        }
     </script>
 </body>
 </html>
